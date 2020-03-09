@@ -1,40 +1,94 @@
 <template>
-    <div class="panel panel-default">
-        <div class="panel-heading">
 
-            <nav>
-                <ul class="list-inline">
+    <body>
+    <header id="header" class="header">
+        <div class="container-fluid head">
 
-                </ul>
-            </nav>
-        </div>
-        <div class="panel-body">
-            Hello my friend
-        </div>
-        <div v-if="authenticated && user">
-            <p>Hello, {{ user.name }}</p>
+            <div class="row headimg">
+                <div class="col-lg-2">
+                    <a href="/" >
+                    <img :src="'/images/logo.png'" class="img-fluid">
+                    </a>
+                </div>
+                <div class="col-lg-10">
+                    <div class="logo__text">
+                        <a href="/" >Vbaraholke.by</a>
+                    </div>
+                </div>
             </div>
-            <router-link to="/logout">Logout</router-link>
-        <div>
-            <router-link to="/login">Login</router-link>
+            <div class="info col-12">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-3 addob ">
+                        <router-link  :to="{ name: 'add_advertisement' }">
+                        ПОДАТЬ ОБЪЯВЛЕНИЕ
+                        </router-link>
+
+                    </div>
+
+                    <div v-if="user == null" class="col-12 col-sm-6 col-md-6 menu  col-lg-8 col-xl-8 d-lg-flex justify-content-lg-end ">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 menuitem ">
+                            <router-link  :to="{ name: 'register' }">
+                            Регистрация
+                            </router-link>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 menuitem1 ">
+                            <router-link  :to="{ name: 'login' }">
+                          Войти
+                            </router-link>
+                        </div>
+                    </div>
+                    <div v-else class="col-12 col-sm-6 col-md-6 menu  col-lg-3 col-xl-4 d-lg-flex justify-content-lg-end ">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4 menuitem2 justify-content-center">
+                            <a href="account.php">Профиль</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <router-view></router-view>
+
+    <div class="container infosec">
+        <div class="row justify-content-center justify-content-md-start ">
+            <div class="col-5 justify-content-center col-lg-3 contacts">
+                <router-link  :to="{ name: 'contacts' }">
+                      Контакты
+                </router-link>
+            </div>
+            <div class="col-6 justify-content-center col-lg-3 rules">
+                <router-link  :to="{ name: 'rules' }">
+                    Правила
+                </router-link>
+            </div>
         </div>
     </div>
+    <div class="container footer">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="credits ">
+                    Бесплатная доска объявлений.<br> Ресублика Беларусь 2020.
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </body>
+
+
 </template>
 
 <script>
     export default {
         data() {
             return {
-                name: 'test2',
-                password: 'test2',
-                email: 'test2@email.com',
                 authenticated:false,
                 user:''
             }
         },
         mounted() {
-            console.log(auth.user);
-           //  this.test_register();
+            this.user = auth.user;
             Event.$on('userLoggedIn', () => {
                 this.authenticated = true;
                 this.user = auth.user;
